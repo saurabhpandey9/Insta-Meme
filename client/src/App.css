@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
+
+.brand-logo{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+.my-card{
+    margin-top: 40px;
+}
+
+.auth-card{
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+.input-field:focus {
+    border-bottom: 1px solid blue !important;
+}
+.row{
+    table-layout: auto;
+}
