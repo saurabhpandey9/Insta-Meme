@@ -3,6 +3,7 @@
 
 .brand-logo{
     font-family: 'Ubuntu', sans-serif;
+    margin-left: 20px;
 }
 
 
@@ -23,3 +24,44 @@
 .row{
     table-layout: auto;
 }
+
+.profile-image{
+    width: 140px;
+    height: 140px;
+    border-radius: 70px;
+    border: 2px solid black;
+    padding: 15px;
+}
+
+.gallery{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.items{
+    width: 30%;
+    height: 30%;
+}
+
+.profile-parent-div{
+    max-width: 550px;
+    margin: 0px auto;
+}
+
+
+/* Home CSS */
+
+.home-card{
+    max-width: 550px;
+    height: max-content;
+    margin: 25px auto;
+}
+
+.parent-create-post{
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 50px;
+    text-align: center;
+}
+

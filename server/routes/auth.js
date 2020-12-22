@@ -8,18 +8,36 @@ const jwt = require('jsonwebtoken')
 
 const requireLogin = require('../middleware/requireLogin')
 
+
+const email_validator = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 router.post('/signup',(req,res)=>{
 
-    const { name, email , password} = req.body
+    var { name, email , password} = req.body;
+
+    email=email.toLowerCase();
 
     if(!name || !email || !password ){
-        return res.status(422).json({err:"Please fill all the details!"})
+        return res.status(422).json({
+            success:false,
+            message:"Please fill all the details!"
+        });
+    }
+    else if (!email_validator.test(email))
+    {
+        return res.status(422).json({
+            success:false,
+            message:"Invaid Email type"
+        });
     }
 
     User.findOne({email:email})
     .then(savedUser=>{
         if(savedUser){
-            return res.status(422).json({err:"User already exist"})
+            return res.status(422).json({
+                success:false,
+                message:"User already exist"
+            });
         }
 
         bcrypt.hash(password,12) // 12 round of salting
@@ -34,7 +52,10 @@ router.post('/signup',(req,res)=>{
             user.save()
             .then(save=>{
                 if(save){
-                    return res.json({msg: "Credential saved successfully"})
+                    return res.json({
+                        success:true,
+                        message:"Credential saved successfully"
+                    });
                 }
             })
             .catch(err=>{
@@ -54,20 +75,29 @@ router.post('/signin',(req,res)=>{
     const {email,password} = req.body
 
     if(!email || !password){
-        return res.status(422).json({err:"Please enter all the credentials!!"})
+        return res.status(422).json({
+            success:false,
+            message:"Please enter all the credentials!!"
+        });
     }
 
     User.findOne({email:email})
     .then(savedUser=>{
         if(!savedUser){
-            return res.status(422).json({err:"Invalid email or password"})
+            return res.status(422).json({
+                success:false,
+                message:"Invalid email or password"
+            });
         }
         else{
 
             bcrypt.compare(password,savedUser.password)
             .then(passcomp=>{
                 if(!passcomp){
-                    return res.status(422).json({err:"Invalid email or password"})
+                    return res.status(422).json({
+                        success:false,
+                        message:"Invalid email or password"
+                    });
                 }
                 else{
 
@@ -75,7 +105,11 @@ router.post('/signin',(req,res)=>{
                     console.log(savedUser)
                     const token = jwt.sign({_id:savedUser._id},JWT_SEC_KEY)
 
-                    return res.json({token})
+                    return res.json({
+                        success:true,
+                        message:"User logged in successfully",
+                        token
+                    })
 
                 }
             }).catch(err=>{

@@ -9,7 +9,10 @@ router.post('/createpost',requireLogin,(req,res)=>{
     const {title,body,url} = req.body
 
     if(!title || !body){
-        return res.status(422).json({err:"Please fill all the fields!!"})
+        return res.status(422).json({
+            success:false,
+            message:"Please fill all the fields!!"
+        });
     }
 
     const post = new Post({
@@ -23,7 +26,10 @@ router.post('/createpost',requireLogin,(req,res)=>{
     .then(msg=>{
         if(msg){
             console.log(msg)
-            return res.json({msg:"data saved successfully"})
+            return res.json({
+                success:true,
+                message:"Post Created successfully"
+            });
         }
     })
     .catch(err=>{
@@ -37,7 +43,11 @@ router.get('/allpost',(req,res)=>{
     Post.find()
     .populate("postedBy","name email")
     .then(allpost=>{
-        return res.json({allpost})
+        return res.json({
+            success:true,
+            message:"Success",
+            allpost
+        });
     }).catch(err=>{
         console.log(err)
     })
@@ -47,7 +57,11 @@ router.get('/allpost',(req,res)=>{
 router.get('/mypost',requireLogin,(req,res)=>{
     Post.find({postedBy:req.user._id})
     .then(mypost=>{
-        return res.json({mypost})
+        return res.json({
+            success:true,
+            message:"Success",
+            mypost
+        });
     })
     .catch(err=>{
         console.log(err)
