@@ -6,14 +6,20 @@ module.exports = (req,res,next)=>{
     const User = mongoose.model("User")
 
     if(!authorization){
-        return res.status(401).json({err: "you must be logged In!!"})
+        return res.status(401).json({
+			success:false,
+            message:"you must be logged In!!"
+			});
     }
     
     const token = authorization.replace("Bearer ","")
 
     jwt.verify(token,JWT_SEC_KEY,(err,payload)=>{
         if(err){
-            return res.status(401).json({err: "you must be logged In!!"}) 
+            return res.status(401).json({
+				success:false,
+				message:"you must be logged In!!"
+				});
         }
 
         const {_id} = payload
@@ -21,7 +27,10 @@ module.exports = (req,res,next)=>{
         User.findById(_id)
         .then(savedUser=>{
             if(!savedUser){
-                return res.status(401).json({err: "you must be logged In!!"}) 
+                return res.status(401).json({
+					success:false,
+					message:"you must be logged In!!"
+					});
             }
 
             req.user = savedUser

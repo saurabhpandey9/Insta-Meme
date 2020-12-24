@@ -31,8 +31,8 @@ const Login = () => {
         }).then(res=>res.json()
         .then(data=>{
             if (data.success) {
+                localStorage.setItem('jwt',data.token);
                 M.toast({html:data.message,classes:'green'});
-                M.toast({html:data.token,classes:'green'});
                 history.push('/');
             }
             else{
