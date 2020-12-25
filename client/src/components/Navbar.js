@@ -13,8 +13,8 @@ const NavBar = () => {
         
         if (state) {
             return [
-                <li><Link to="/profile">Profile</Link></li>,
-                <li><Link to="/createpost">Create Post</Link></li>,
+                <li><Link to="/profile" >Profile</Link></li>,
+                <li><Link to="/createpost" >Create Post</Link></li>,
                 <li onClick={()=>{
                     localStorage.clear()
                     dispatch({type:"CLEAR"})
@@ -24,8 +24,8 @@ const NavBar = () => {
         }
         else {
             return [
-                <li><Link to="/login">Login</Link></li>,
-                <li><Link to="/signup">Signup</Link></li>
+                <li><Link to="/login" >Login</Link></li>,
+                <li><Link to="/signup" >Signup</Link></li>
             ]
         }
     }

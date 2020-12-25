@@ -14,6 +14,10 @@ const PostShema = new mongoose.Schema({
         type:String,
         require:true
     },
+    like:[{
+        type:ObjectId,
+        ref:"User"
+    }],
     postedBy:{
         type:ObjectId,
         ref:"User"

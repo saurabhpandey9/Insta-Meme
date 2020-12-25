@@ -14,7 +14,6 @@ const Profile= ()=>{
         }).then(res => res.json()
             .then(res => {
                 if (res.success) {
-                    console.log(res.allpost);
                     SetData(res.mypost)
                 }
 
@@ -45,7 +44,7 @@ const Profile= ()=>{
 
                     return (
 
-                        <img className='items' src={item.url} />
+                        <img className='items' src={item.url} key={item._id} alt={item.title} key={item._id} />
 
                     );
 

@@ -5,13 +5,10 @@ import Login from "./components/screens/Login";
 import Signup from "./components/screens/Signup";
 import Profile from "./components/screens/Profile";
 import CreatePost from "./components/screens/CreatePost";
-import { initialState, reducer } from './components/reducer/UserReducer';
 import { useEffect, createContext, useReducer, useContext } from 'react';
 
+import { initialState, reducer } from './components/reducer/UserReducer';
 export const userContext = createContext();
-
-
-
 
 const Routing = () => {
   const history = useHistory();
@@ -20,7 +17,6 @@ const Routing = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       dispatch({type:"USER",payload:user})
-      history.push('/')
     }else{
       history.push('/login')
     }
