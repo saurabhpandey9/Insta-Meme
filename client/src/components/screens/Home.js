@@ -1,24 +1,52 @@
-import react from 'react';
+import react, { useEffect, useState } from 'react';
 
-const Home= ()=>{
-    return(
+const Home = () => {
+    const [data, SetData] = useState([]);
+    useEffect(() => {
+
+        fetch("/allpost", {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+
+        }).then(res => res.json()
+            .then(res => {
+                if (res.success) {
+                    console.log(res.allpost);
+                    SetData(res.allpost)
+                }
+
+            }));
+
+    }, [])
+    return (
         <div className='home'>
-            <div className='card home-card'>
+            {
+                data.map(item => {
 
-                <h5>Name</h5>
+                    return (
 
-                <div className='card-image'>
-                    <img src="https://images.unsplash.com/photo-1482784160316-6eb046863ece?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"/>
-                </div>
+                        <div className='card home-card' key={item._id}>
+                            <h5> {item.postedBy.name} </h5>
+                            <div className='card-image'>
+                                <img src={item.url} />
+                            </div>
+                            <div className='card-content'>
+                                <i className="material-icons" style={{ color: 'red' }}>favorite</i>
+                                <h6>{item.title}</h6>
+                                <p>{item.body}</p>
+                                <input type='text' placeholder='Comment' />
+                            </div>
+                        </div>
 
-                <div className='card-content'>
-                <i className="material-icons" style={{color:'red'}}>favorite</i>
-                    <h6>title</h6>
-                    <p>content</p>
-                    <input type='text' placeholder='Comment'/>
-                </div>
+                    );
 
-            </div>
+                })
+            }
+
+
+
         </div>
 
     );

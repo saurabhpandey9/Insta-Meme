@@ -100,15 +100,16 @@ router.post('/signin',(req,res)=>{
                     });
                 }
                 else{
-
-                    // return res.json({msg: "User authenticated successfully"})
-                    console.log(savedUser)
+                    
+                    savedUser.password=undefined;
+					console.log(savedUser)
                     const token = jwt.sign({_id:savedUser._id},JWT_SEC_KEY)
 
                     return res.json({
                         success:true,
                         message:"User logged in successfully",
-                        token
+                        token,
+						user:savedUser
                     })
 
                 }
